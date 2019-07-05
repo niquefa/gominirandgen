@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"strings"
 	"testing"
 )
 func TestRandomAlphaDigitString(t *testing.T){
@@ -138,7 +139,7 @@ func TestRandomValidIntSet( t *testing.T){
 	minValue := 1
 	maxValue := 10
 	size := 5
-	err, m := getRandomIntSet(size,minValue,maxValue)
+	err, m := RandomIntSet(size,minValue,maxValue)
 	assert.Nil(t,err)
 	assert.Equal(t,size,len(m))
 }
@@ -146,7 +147,7 @@ func TestRandomInValidIntSet( t *testing.T){
 	minValue := 1
 	maxValue := 10
 	size := 11
-	err, _ := getRandomIntSet(size,minValue,maxValue)
+	err, _ := RandomIntSet(size,minValue,maxValue)
 	assert.NotNil(t,err)
 	//assert.Equal(t,size,len(m))
 }
@@ -154,7 +155,7 @@ func TestRandomValidLargeIntSet( t *testing.T){
 	minValue := 1
 	maxValue := 999999999
 	size := 200000
-	err, m := getRandomIntSet(size,minValue,maxValue)
+	err, m := RandomIntSet(size,minValue,maxValue)
 	assert.Nil(t,err)
 	assert.Equal(t,size,len(m))
 }
@@ -162,7 +163,7 @@ func TestRandomValidInt64Set( t *testing.T){
 	minValue := 1
 	maxValue := 10
 	size := 5
-	err, m := getRandomInt64Set(size,int64(minValue),int64(maxValue))
+	err, m := RandomInt64Set(size,int64(minValue),int64(maxValue))
 	assert.Nil(t,err)
 	assert.Equal(t,size,len(m))
 }
@@ -170,7 +171,7 @@ func TestRandomInValidInt64Set( t *testing.T){
 	minValue := 1
 	maxValue := 10
 	size := 11
-	err, _ := getRandomInt64Set(size,int64(minValue),int64(maxValue))
+	err, _ := RandomInt64Set(size,int64(minValue),int64(maxValue))
 	assert.NotNil(t,err)
 	//assert.Equal(t,size,len(m))
 }
@@ -180,7 +181,33 @@ func TestRandomValidLargeInt64Set( t *testing.T){
 	var maxValue int64
 	maxValue = 99999999900000000
 	size := 200000
-	err, m := getRandomInt64Set(size,int64(minValue),int64(maxValue))
+	err, m := RandomInt64Set(size,int64(minValue),int64(maxValue))
 	assert.Nil(t,err)
 	assert.Equal(t,size,len(m))
+}
+func TestRandomEmail( t *testing.T ){
+	for i := 0 ; i < 1000 ; i++ {
+		email := RandomEmail()
+		atFirstIndex := strings.Index(email,"@")
+		atLastIndex := strings.LastIndex(email,"@")
+		assert.Equal(t,atFirstIndex,atLastIndex)
+		assert.Greater(t,atFirstIndex,0)
+		assert.Less(t,atFirstIndex,len(email)-1)
+		assert.GreaterOrEqual(t,len(email),3)
+	}
+}
+func TestRandomPhone( t *testing.T ){
+	for i := 0 ; i < 1000 ; i++ {
+		phone := RandomPhoneNumber()
+		assert.GreaterOrEqual(t,len(phone),6)
+		assert.LessOrEqual(t,len(phone),15)
+	}
+}
+
+func TestRandomAddress( t *testing.T ){
+	for i := 0 ; i < 10 ; i++ {
+		address := RandomAddress()
+		fmt.Println(address)
+		assert.GreaterOrEqual(t,len(address),5)
+	}
 }
