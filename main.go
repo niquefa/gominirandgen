@@ -101,7 +101,7 @@ func RandomStringExactLength( length int , alphabet string) string {
 }
 
 //Returns a map with 'size' different integers as its keys
-func getRandomIntSet( size int, minValue int , maxValue int ) (error, map[int]bool) {
+func RandomIntSet( size int, minValue int , maxValue int ) (error, map[int]bool) {
 	if minValue < 0 || maxValue < 0 || maxValue < minValue || maxValue-minValue+1 < size {
 		return fmt.Errorf("error, invalid arguments in getRandomIntSet(size = %d, minValue = %d, maxValue = %d)",
 			size, minValue, maxValue), nil
@@ -116,7 +116,7 @@ func getRandomIntSet( size int, minValue int , maxValue int ) (error, map[int]bo
 	return nil, set
 }
 //Returns a map with 'size' different strings as its keys
-func getRandomInt64Set( size int, minValue int64 , maxValue int64 ) (error, map[int64]bool) {
+func RandomInt64Set( size int, minValue int64 , maxValue int64 ) (error, map[int64]bool) {
 	if minValue < 0 || maxValue < 0 || maxValue < minValue || maxValue-minValue+1 < int64(size) {
 		return fmt.Errorf("error, invalid arguments in getRandomInt64Set(size = %d, minValue = %d, maxValue = %d)",
 			size, minValue, maxValue), nil
@@ -131,7 +131,7 @@ func getRandomInt64Set( size int, minValue int64 , maxValue int64 ) (error, map[
 	return nil, set
 }
 //Returns a map with 'size' different integers as its keys
-func getRandomStringSet( size int, minLength int , maxLength int , alphabet string ) (error, map[string]bool) {
+func RandomStringSet( size int, minLength int , maxLength int , alphabet string ) (error, map[string]bool) {
 	maxDifferentWordsSet := int(math.Pow(float64(len(alphabet)),float64(minLength)))
 	if size >= maxDifferentWordsSet || minLength < 0 || maxLength < 0 || maxLength < minLength || len(alphabet) < 2{
 		return fmt.Errorf("error, invalid arguments in " +
@@ -147,8 +147,40 @@ func getRandomStringSet( size int, minLength int , maxLength int , alphabet stri
 	}
 	return nil, set
 }
-func getRandomEmail() string{
-	
+//Return a valid pseudo random email address
+func RandomEmail() string{
+	alphabet := alphaLower+"0123456789_0123456789.0123456789"
+	end := RandomStringExactLength( RandomInt(2,8),alphaLower)+
+		"."+RandomStringExactLength(RandomInt(2,8),alphaLower)
+	end += RandomStringExactLength(1,alphaLower)
+	return RandomStringExactLength(1,alphaLower)+
+		RandomStringExactLength(RandomInt(2,8),alphabet)+
+		RandomStringExactLength(1,alphaLower)+"@"+
+		RandomStringExactLength(1,alphaLower)+end
+}
+
+//Return a valid phone number, just a 10 symbols string formed only by digits 0 to 9
+func RandomPhoneNumber() string{
+
+	return RandomStringExactLength(RandomInt(10,10),"0123456789")
+}
+//Simple pseudoRandom Colombian Address Generator
+func RandomAddress() string {
+	var first = [5]string {"Calle ","Carrera ","Avenida ","Diagonal ","Transversal "}
+	answer := first[RandomInt(0,len(first)-1)]
+	answer += fmt.Sprintf("%d",RandomInt(0,250))
+	if RandomInt(0,10) < 4 {
+		answer += string(alphaUpper[RandomInt(0,len(alphaUpper)-1)])
+	}
+	answer += " # "
+	answer += fmt.Sprintf("%d",RandomInt(0,250))
+	if RandomInt(0,10) < 4 {
+		answer += string(alphaUpper[RandomInt(0,10)])
+	}
+	answer += " - "
+	answer += fmt.Sprintf("%d",RandomInt(0,100))
+
+	return answer
 }
 func showEssentials(){
 	// Create and seed the generator.
@@ -191,6 +223,6 @@ func showEssentials(){
 }
 func main() {
 	//showEssentials()
-	_, m := getRandomStringSet(10, 3,10,"abcd")
+	_, m := RandomStringSet(10, 3,10,"abcd")
 	fmt.Printf("\n__%v__\n",m)
 }
