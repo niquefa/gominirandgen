@@ -1,18 +1,14 @@
 # GoMiniRandGen
 
-Minimalistic random generator in go-lang almost pure imperative programming
+Minimalistic random generator in go-lang almost pure imperative programming. Its a simple random utilities set of function to use in any project involving testing, data generation or artificial inteligence and much more I supose.
 
 ## Getting Started
 
-Just clone the project and start experimenting.
+Just clone the project and start experimenting. Feel free to write me to niquefa@gmail.com for any suggestion or errors.
 
 ### Prerequisites
 
 Go Lang SDK 1.12.5
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Contributing
 
@@ -20,7 +16,7 @@ Feel free to write me with suggestions about new random generation funcions.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Just use se [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
