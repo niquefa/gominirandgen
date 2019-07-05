@@ -1,6 +1,6 @@
 # GoMiniRandGen
 
-Minimalistic random generator in go-lang almost pure imperative programming. Its a simple random utilities set of function to use in any project involving testing, data generation or artificial inteligence and much more I supose.
+Minimalistic random generator in go-lang almost pure imperative programming. Its a simple, easy to use random utilities set of functions to use in any project involving testing, data generation or artificial inteligence, and much more I supose.
 
 ## Getting Started
 
