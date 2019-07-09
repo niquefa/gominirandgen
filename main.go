@@ -133,7 +133,8 @@ func RandomInt64Set( size int, minValue int64 , maxValue int64 ) (error, map[int
 //Returns a map with 'size' different integers as its keys
 func RandomStringSet( size int, minLength int , maxLength int , alphabet string ) (error, map[string]bool) {
 	maxDifferentWordsSet := int(math.Pow(float64(len(alphabet)),float64(minLength)))
-	if size >= maxDifferentWordsSet || minLength < 0 || maxLength < 0 || maxLength < minLength || len(alphabet) < 2{
+	if size < 1 || size >= maxDifferentWordsSet || minLength < 0 || maxLength < 0 ||
+		maxLength < minLength || len(alphabet) < 2{
 		return fmt.Errorf("error, invalid arguments in " +
 			"getRandomStringSet(size = %d, minLength = %d, maxLength = %d, alphabet = %s)",
 			size, minLength, maxLength,alphabet), nil
@@ -165,7 +166,7 @@ func RandomPhoneNumber() string{
 	return RandomStringExactLength(RandomInt(10,10),"0123456789")
 }
 //Simple pseudoRandom Colombian Address Generator
-func RandomAddress() string {
+func RandomAddressCOL() string {
 	var first = [5]string {"Calle ","Carrera ","Avenida ","Diagonal ","Transversal "}
 	answer := first[RandomInt(0,len(first)-1)]
 	answer += fmt.Sprintf("%d",RandomInt(0,250))
@@ -181,6 +182,40 @@ func RandomAddress() string {
 	answer += fmt.Sprintf("%d",RandomInt(0,100))
 
 	return answer
+}
+//Returns a map with 'size' different phones as its keys. A random phone here is just a string
+//returned by RandomPhoneNumber
+func RandomPhoneSet( size int ) (error, map[string]bool) {
+	if size < 0 {
+		return fmt.Errorf("error, invalid arguments in " +
+			"getRandomPhoneSet(size = %d)",
+			size), nil
+	}
+	set := make(map[string]bool)
+	for {
+		set[RandomPhoneNumber()] = true
+		if len(set) == size {
+			break
+		}
+	}
+	return nil, set
+}
+//Returns a map with 'size' different emails as its keys. A random email here is just a string
+//returned by RandomEmail
+func RandomEmailSet( size int) (error, map[string]bool) {
+	if size < 1 {
+		return fmt.Errorf("error, invalid arguments in " +
+			"getRandomEmailSet(size = %d)",
+			size), nil
+	}
+	set := make(map[string]bool)
+	for {
+		set[RandomEmail()] = true
+		if len(set) == size {
+			break
+		}
+	}
+	return nil, set
 }
 func showEssentials(){
 	// Create and seed the generator.
@@ -223,6 +258,9 @@ func showEssentials(){
 }
 func main() {
 	//showEssentials()
-	_, m := RandomStringSet(10, 3,10,"abcd")
+	_, m := RandomPhoneSet(10)
 	fmt.Printf("\n__%v__\n",m)
+
+	_, m2 := RandomEmailSet(10)
+	fmt.Printf("\n__%v__\n",m2)
 }

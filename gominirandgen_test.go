@@ -62,7 +62,6 @@ func TestRandomUpperEnglishCharacter(t *testing.T){
 	}
 }
 
-
 func TestDistributionOneDigit(t *testing.T){
 	auxTestDistribution(1,9,10000, t)
 }
@@ -143,13 +142,15 @@ func TestRandomValidIntSet( t *testing.T){
 	assert.Nil(t,err)
 	assert.Equal(t,size,len(m))
 }
-func TestRandomInValidIntSet( t *testing.T){
-	minValue := 1
-	maxValue := 10
-	size := 11
-	err, _ := RandomIntSet(size,minValue,maxValue)
-	assert.NotNil(t,err)
-	//assert.Equal(t,size,len(m))
+func TestRandomInValidIntSet( t *testing.T) {
+	for test := 0 ; test < 100; test ++ {
+		minValue := 1
+		maxValue := 10
+		size := RandomInt(1,100)
+		err, m := RandomIntSet(size, minValue, maxValue)
+		assert.NotNil(t, err)
+		assert.Equal(t, size, len(m))
+	}
 }
 func TestRandomValidLargeIntSet( t *testing.T){
 	minValue := 1
@@ -168,22 +169,26 @@ func TestRandomValidInt64Set( t *testing.T){
 	assert.Equal(t,size,len(m))
 }
 func TestRandomInValidInt64Set( t *testing.T){
-	minValue := 1
-	maxValue := 10
-	size := 11
-	err, _ := RandomInt64Set(size,int64(minValue),int64(maxValue))
-	assert.NotNil(t,err)
-	//assert.Equal(t,size,len(m))
+	for test := 0 ;test < 100; test++ {
+		size := RandomInt(1, 1000)
+		minValue := 1
+		maxValue := 10
+		err, m := RandomInt64Set(size, int64(minValue), int64(maxValue))
+		assert.NotNil(t, err)
+		assert.Equal(t, size, len(m))
+	}
 }
 func TestRandomValidLargeInt64Set( t *testing.T){
-	var minValue int64
-	minValue = 99999999
-	var maxValue int64
-	maxValue = 99999999900000000
-	size := 200000
-	err, m := RandomInt64Set(size,int64(minValue),int64(maxValue))
-	assert.Nil(t,err)
-	assert.Equal(t,size,len(m))
+	for test := 0 ;test < 100; test++ {
+		size := RandomInt(1, 1000)
+		var minValue int64
+		minValue = 99999999
+		var maxValue int64
+		maxValue = 99999999900000000
+		err, m := RandomInt64Set(size, int64(minValue), int64(maxValue))
+		assert.Nil(t, err)
+		assert.Equal(t, size, len(m))
+	}
 }
 func TestRandomEmail( t *testing.T ){
 	for i := 0 ; i < 1000 ; i++ {
@@ -206,8 +211,26 @@ func TestRandomPhone( t *testing.T ){
 
 func TestRandomAddress( t *testing.T ){
 	for i := 0 ; i < 10 ; i++ {
-		address := RandomAddress()
+		address := RandomAddressCOL()
 		fmt.Println(address)
 		assert.GreaterOrEqual(t,len(address),5)
+	}
+}
+func TestRandomValidPhoneSet( t *testing.T){
+
+	for test := 0 ;test < 100; test++{
+		size := RandomInt(1,1000)
+		err, m := RandomPhoneSet(size)
+		assert.Nil(t, err)
+		assert.Equal(t, size, len(m))
+	}
+}
+func TestRandomValidEmailSet( t *testing.T){
+
+	for test := 0 ;test < 100; test++{
+		size := RandomInt(1,1000)
+		err, m := RandomEmailSet(size)
+		assert.Nil(t, err)
+		assert.Equal(t, size, len(m))
 	}
 }
