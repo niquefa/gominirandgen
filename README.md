@@ -10,6 +10,9 @@ Just clone the project and start experimenting. Feel free to write me to niquefa
 
 Go Lang SDK 1.12.5
 
+For testing:
+github.com/stretchr/testify v1.3.0
+
 ## Contributing
 
 Feel free to write me with suggestions about new random generation funcions.
